@@ -1,0 +1,312 @@
+% This is samplepaper.tex, a sample chapter demonstrating the
+% LLNCS macro package for Springer Computer Science proceedings;
+% Version 2.20 of 2017/10/04
+%
+\documentclass[runningheads]{llncs}
+%
+\usepackage{graphicx}
+\usepackage{cleveref}
+
+\usepackage{hyperref}
+
+
+
+
+% Used for displaying a sample figure. If possible, figure files should
+% be included in EPS format.
+%
+% If you use the hyperref package, please uncomment the following line
+% to display URLs in blue roman font according to Springer's eBook style:
+% \renewcommand\UrlFont{\color{blue}\rmfamily}
+
+\begin{document}
+%
+\title{Homework Razvan-Andrei Morariu}
+%
+%\titlerunning{Abbreviated paper title}
+% If the paper title is too long for the running head, you can set
+% an abbreviated paper title here
+%
+\author{Razvan-Andrei Morariu}
+%
+
+\institute{University of Vienna \and
+\email{morariur41@univie.ac.at}\\
+}
+%
+\maketitle              % typeset the header of the contribution
+%
+\begin{abstract}
+This homework highlights the main aspects of the paper "Word Embeddings Quantify 100 Years of Gender and Ethnic Stereotypes", rises some questions related to it and tries to put in in a larger perspective by comparing it with related papers.The paper "Word Embeddings Quantify 100 Years of Gender and Ethnic Stereotypes" introduces a framework that utilizes word embeddings to analyze changes in stereotypes and attitudes towards women and ethnic minorities in the United States over the past century. With the help of word embedding, a common tool in natural language processing, the authors demonstrate how the embeddings track demographic and occupation shifts. The framework captures major social movements and reveals how certain words are associated to a specific part of population. This intersection of machine learning and social science provides a powerful tool for understanding the dynamics of societal attitudes.
+
+\keywords{NLP \and embedding \and stereotype }
+\end{abstract}
+%
+%
+%
+\section{Introduction}
+\subsection{A Subsection Sample}
+The  given paper explores the use of word embeddings to analyze gender and ethnic stereotypes over time. Word embeddings are high-dimensional vectors that capture semantic relationships between words. The authors propose a framework that quantifies and compares trends in language using word embeddings trained on 100 years of text data. They find that the temporal dynamics of word embeddings align with changes in stereotypes, reflecting societal shifts. In particular, the paper quantifies how specific biases decrease over time while other stereotypes increase. The results are validated against external metrics, demonstrating the power of word embedding as a quantitative tool to study biases and historical trends. In order to prove that their results are robust the authors show how similar results can be otbained with different models with the help on different datasets. After presenting the methods and results of the paper in the first sections, the focus will be moved on to putting the paper in a larger context and discussing some problems or difficulties that the methods proposed by the authors can encounter. In the end, I will PROPOSE/ PRESENT AN RESEARCH CURIOSITY/IDEA I FOUND INTERESTING??????????????????????/
+
+\section {Notations and models}
+Before presenting the main results of the paper, the most important mathematical notations and NLP models will be briefly presented. 
+\subsection{Data and models}
+It is worth mentioning that the authors used different text corpora such as Google News dataset, New York times annotated corpusin order to validate the results and to show robustness. Moreover, for some of the analysis the empirical data was needed and the authors used U.S. census data for this. 
+When it comes to models, the authors used different types of word embeeding models to see if different models offer similar results which lead to same conclusions. The main models used are the following:
+\begin{itemize}
+    \item word2vec \cite{word2vec} : This model can be considered the main mmodel in this paper. It is based on the idea that words with similar meanings tend to appear in similar contexts. It learns to represent words in a continuous vector space, where words with similar meanings are positioned closer to each other. The model achieves this by being trained on a large corpus of text using a neural network architecture. 
+    \vspace{\baselineskip}
+    
+    \item GloVe \cite{glove}: Unlike Word2Vec, which is based on a neural network architecture, GloVe is a count-based model that leverages the statistics of word co-occurrence in a corpus. It starts by constructing a co-occurrence matrix that represents the frequency of words appearing together in a given context window. This matrix provides insights into the relationships between words and how often they co-occur in the text.The GloVe algorithm then aims to learn word embeddings that encode the ratios of co-occurrence probabilities. 
+
+    \vspace{\baselineskip}
+    
+    \item SVD  \cite{SVD}: Singular Value Decomposition embedding is a technique used to learn word embeddings using linear algebra. It is a dimensionality reduction method that captures the latent semantic information in the co-occurrence matrix of words. The SVD algorithm begins by constructing a co-occurrence matrix. Next, SVD decomposes this co-occurrence matrix into three separate matrices: U, Σ, and V. U represents the left singular vectors, Σ represents the diagonal matrix of singular values, and V represents the right singular vectors. To obtain word embeddings, SVD truncates the decomposed matrices by selecting the top k singular values and their corresponding singular vectors. 
+\end{itemize}
+
+\subsection {Notations}
+The first important remark that should be made is that all the vectors in the paper are of norm 1 so none of the following formulas will have the scaling coefficient. In order to calculated the similarity between 2 vectors that represent 2 different words this authors used:
+\begin{itemize}
+    \item cosine similarity: cos-sim(u,v)=<u,v>
+    \item negative norm difference:  $ neg \tiny{-}norm\tiny{-}dif(u,v)= -\|u-v\| _2 $
+\end{itemize}
+These choices are very intuitive because for both measures, the closer the vectors, the lower the measure, and the more different the vectors, the higher the measures. 
+
+In order to compare 2 sets of words and to see which of them is closer (= more biased in the paper) to a set of vectors representing a group of related words the authors will used the relative norm distance:
+\begin{itemize}
+    \item relative norm distance = $\sum_m \| m-v \|_2 -\sum_m \|m-u\| _2 $
+\end{itemize}
+ where we want to compare set U and V with respect to M. Let u the average vector for set U and v the average vector of set V. By calculating this norm it is possible to check if on average vectors from M are closer to the average vector from U or to the average vector from V. In the paper the result of this norm is also called the bias score. For example, if we want to see if a set of adjectives is closer to women than men, we can consider the vector u from the definition to be the average of the embedding vectors for woman, wife, girl to  and the vector v from the definition to be the average of the of the embedding vectors for words man, husband, boy. Many of the results obtained in the paper are based on a similar strategy when a specific race, gender or religion are characterized by such an average vector of embeddings of related words. From now on, we will not describe this process again when presenting the results.  
+
+
+
+
+\section {Results}
+In this section the main results of the paper will be presented. We will divide this section in 3 subsections. 
+
+
+
+\subsection{Embeddings for gender bias or ethnic bias for  occupations}
+
+
+\begin{figure}[h]
+\includegraphics[width=0.9\textwidth]{TDLNLP/im1NLP.png}
+\caption{}
+
+\label{fig1}
+\end{figure}
+
+
+
+
+The first analysis is related to how different occupations are more biased to a gender in the embeddings are also more frequent to that gender in the empirical proportions. ~\ref{fig1}
+
+
+
+
+
+It is worth mentioning that in the plot the women occupation proportion is indeed the log of a proportion such that 0 means no bias towards a set. We can also observe that the regression line goes through the origin which means that that occupations where the number of men was equal to the number of women in empirical proportions were also unbiased to a specific gender in the embedding. The confidence in the results can be really high since they have a p value smaller than $10^{-9}$ .
+
+Another important analysis related to gender bias in occupations is the related to how men are more biased to occupations in general than women and how this bias evolved over time. 
+ \begin{figure}[h]
+ 
+\includegraphics[width=0.9\textwidth]{TDLNLP/im2NLP.png}
+\caption{}
+
+\label{fig2}
+ \end{figure}
+We can see in Fig. ~\ref{fig2} that empirically more men were working (i.e. having an occupation) between 1910 and 1990. However, the trend is encouraging since the bias in both embedding and empirical proportions goes to 0. It is important to highlight that again that the embeddings obtained when training on a corpus that represents a specific decade of time stronly reflect the the epirical proportions for that decade. So, word embedding can be used to find also the dynamic development of different stereotypes. 
+
+A similar analysis was done for ethnic stereotype for occupations. We can see in \ref{fig3} that thre bias in embedding follow the empirical numbers too. Moreover, the steady increase in bias score between 1960 and 1990 can be observed easily in both the bias score and empirical score.
+ \begin{figure}[h]
+ 
+\includegraphics[width=0.9\textwidth]{TDLNLP/Pim3NLP.png}
+\caption{}
+
+\label{fig3}
+ \end{figure}
+
+
+\subsection{Quantifying changing attitudes toward women with adjective embeddings}
+
+
+The second main type of analysis is related to how attitudes toward women can be observed using word embedding. In figure \ref{fig4} we can see how different  adjectives were strongly related to women over time. Even if some of the adjectives are positive, the trends are not completely encouraging since morbid was that strongly associated with women in 1990.It is worth mentioning that the bias score of adjectives is strongly correlated with human assigned scores (p<0.0002) and that adjectives  related to intelligence became more and more related to women compared to men $(p < 0.005)$, while adjective related to physical appearance did not have a clear trend. 
+
+
+\begin{figure}[h]
+
+ 
+\includegraphics[width=0.9\textwidth]{TDLNLP/im4NLP.png}
+\caption{}
+
+\label{fig4}
+ \end{figure}
+
+ Another type of analysis can be done comparing how correlated are the bias scores for adjectives with respect to women in 2 different decades.
+ \begin{figure}[h]
+
+ 
+ 
+\includegraphics[width=0.9\textwidth]{TDLNLP/im5NLP.png}
+\caption{}
+
+\label{fig5}
+ \end{figure}
+ In figure \ref{fig5} we can see the correlation matrix between these decades. Two important observations can be highlighted. Firstly, the results are intuitive since adjectives from consecutive years are more correlated. Secondly, when the correlation between between 2 consecutive decades is clearly lower than the average there is an important historical event that explains the lower value of correlation. So, word embedding seems to reflect the reality really well also for observing how attitudes toward women developed over time.
+ 
+ \subsection{Embedding bias to quantify historical ethnic and religion stereotypes}
+ The last subsection of the results will be related to historical stereotypes of Asian ethnicity and 2 religions. It is well known that many Asians lived in America during the 20th century.
+
+  \begin{figure}[h]
+ \centering
+\hspace{-5cm}
+ 
+ 
+\includegraphics[width=1.37\textwidth]{TDLNLP/im6NLP.png}
+\caption{}
+
+\label{fig6}
+
+
+ \end{figure}
+
+In Fig. \ref{fig6} we can see how the Americans perspective of the Asians changed over time. The 2 plots have the same reasoning behind them as the plots related to women stereotypes and can be interpreted in the same way. They show how the attitudes toward Asians developed in a positive way over time and how important historical events lead to a more drastic change between two consecutive decades. 
+
+The last type of results obtained using word embedding are related to religion stereotypes. The main purpose of this analysis is to show how important historical events can be observed just by looking at the dynamical changing of the embeddings over time. 
+
+
+  \begin{figure}[h]
+ \centering
+\hspace{-5cm}
+ 
+ 
+\includegraphics[width=0.9\textwidth]{TDLNLP/im7NLP.png}
+\caption{}
+
+\label{fig7}
+
+
+ \end{figure}
+
+We can see in Fig. \ref{fig7} how the bias score with respect to terrorism developed over time in USA when comparing Christianity and Islam. Just by looking at the graph we can observe that the sharp increase in Islam bias score with respect to terrorism stands out. Of course, it can be easily explained by the can be explained by the well-known event 9/11. It is also interesting to observe that no matter the year, Islam was more biased to terrorism than Christianity and that there is also a sharp decrease in the bias score in 1996-1998 that might be explained by the fact that there were more and more Isalmic people with highly respectable jobs. 
+  
+
+
+\section {Wider context of the paper}
+-cauta 2 paperuri asemanatoare si compara rezultate
+- spune ca poate a dus la a cauta algoritmi de debias si prezinta unul
+\vspace{5cm}
+
+The exploration of gender and ethnic stereotypes is a significant subject that spans various academic fields. Analyzing language is a common approach employed to uncover, comprehend, and illustrate these stereotypes. Studies related to these steretypes have been conducted for a long time. Early studies in this field were mostly based on human surveys \cite{early1}, dictionary and qualitatie analysis \cite{early2} or in depth knowledge \cite{early3}. Even if these methods can produce clear results when studying stereotypes they have a high drawback. All of them involve a lot of human work and are very time consuming. Moreover, a study that reies on human surveys is also dependent on the willingness of people tu answer the specific tasks from the survey. In consequence, word embedding come up with the solution to these problems. All that we need to use word embedding is a huge text corpora, a suitable machine learning algorithm that processes the text and and a few persons who are able to use this type of method. So, when models like word2vec, GloVe or SVD for NLP apperead, the NLP community was able to do studies that analysis stereotypes with the help of these model. The  first important thing was to show that the results obtained using these models are similar to the ones obtained empirically. In this way, these NLP methods can be used to find new stereotypes with the costs of huge human time consumption. To be more specific, we will briefly introduce 2 important preceding the one discussed thus far, which share fundamental elements in common with the  Word Embeddings Quantify 100 Years of Gender and Ethnic Stereotypes". The first example can be "Semantics derived automatically from language corpora contain human-like biases" by Caliskan, et all. \cite{recent1}
+
+\section{Discussion}
+-importanta lucrarii din nou apoi:
+-ciudat ca au folosit pearson desi nu e normal
+-problemele din pptx
+-mai e altcv?
+
+\section {Research ideas}
+-oare conteaza cat e embeddingul cand compari cosine similarity cu euclidean similarity
+-alta idee?
+
+
+\section{Conclusion}
+
+
+
+
+
+
+
+
+
+
+\begin{table}
+\caption{Table captions should be placed above the
+tables.}\label{tab1}
+\begin{tabular}{|l|l|l|}
+\hline
+Heading level &  Example & Font size and style\\
+\hline
+Title (centered) &  {\Large\bfseries Lecture Notes} & 14 point, bold\\
+1st-level heading &  {\large\bfseries 1 Introduction} & 12 point, bold\\
+2nd-level heading & {\bfseries 2.1 Printing Area} & 10 point, bold\\
+3rd-level heading & {\bfseries Run-in Heading in Bold.} Text follows & 10 point, bold\\
+4th-level heading & {\itshape Lowest Level Heading.} Text follows & 10 point, italic\\
+\hline
+\end{tabular}
+\end{table}
+
+
+\noindent Displayed equations are centered and set on a separate
+line.
+\begin{equation}
+x + y = z
+\end{equation}
+
+
+
+%
+% the environments 'definition', 'lemma', 'proposition', 'corollary',
+% 'remark', and 'example' are defined in the LLNCS documentclass as well.
+%
+
+
+
+
+
+For citations of references, we prefer the use of square brackets
+and consecutive numbers. Citations using labels or the author/year
+convention are also acceptable. The following bibliography provides
+a sample reference list with entries for journal
+articles~\cite{ref_article1}, an LNCS chapter~\cite{ref_lncs1}, a
+book~\cite{ref_book1}, proceedings without editors~\cite{ref_proc1},
+and a homepage~\cite{ref_url1}. Multiple citations are grouped
+\cite{ref_article1,ref_lncs1,ref_book1},
+\cite{ref_article1,ref_book1,ref_proc1,ref_url1}.
+
+
+
+
+
+
+
+%
+% ---- Bibliography ----
+%
+% BibTeX users should specify bibliography style 'splncs04'.
+% References will then be sorted and formatted in the correct style.
+%
+% \bibliographystyle{splncs04}
+% \bibliography{mybibliography}
+%
+\begin{thebibliography}{10}
+
+
+\bibitem{early1}
+Williams, J. E., and Best, D. L. 1977. Sex Stereotypes and Trait Favorability on the Adjective Check List. Educational
+and Psychological Measurement 37(1):101–110.
+
+\bibitem{early2}
+Henley, N. M. 1989. Molehill or Mountain? WhatWe Know and Dont Know About Sex Bias in Language. In Gender
+and Thought: Psychological Perspectives. Springer, New York, NY. 59–78. DOI: 10.1007/978-1-4612-3588-0 4.
+
+\bibitem{early3}
+Hellinger, M., and Bussmann, H. 2001. Gender Across Languages: The Linguistic Representation of Women and Men.
+John Benjamins Publishing.
+
+\bibitem{recent1}
+Caliskan, A.; Bryson, J. J.; and Narayanan, A. 2017. Semantics derived automatically from language corpora contain
+human-like biases. Science 356(6334):183–186.
+
+\bibitem{word2vec}
+Mikolov, T.; Chen, K.; Corrado, G.; and Dean, J. 2013a. Efficient estimation of word representations in vector space.
+arXiv preprint arXiv:1301.3781.
+
+\bibitem{glove}
+GloVe: Global Vectors for Word Representation Jeffrey Pennington, Richard Socher, Christopher D. Manning Computer Science Department, Stanford University, Stanford, CA 94305   https://nlp.stanford.edu/pubs/glove.pdf
+\bibitem{SVD}
+https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwjduvGip5OAAxUR0wIHHSrBBCYQFnoECA8QAQ&url=https%3A%2F%2Fmedium.com%2Fanalytics-vidhya%2Fco-occurrence-matrix-singular-value-decomposition-svd-31b3d3deb305&usg=AOvVaw2p0Y3U9p-yFgMGgO3oMb2M&opi=89978449
+
+\end{thebibliography}
+\end{document}
